@@ -6,14 +6,14 @@ var requests = require('requests');
 const homefile=fs.readFileSync("home2.html", "utf-8");
 
 const replaceval=(temp,org)=>{
-  org.main.temp=Math.round(org.main.temp-273.15);
-  org.main.temp_min=Math.round(org.main.temp_min-273.15);
-  //org.main.temp_max=Math.round(org.main.temp_max-273.15);
+  org.main.temp=(org.main.temp-273.15).toFixed(2);;
+  org.main.temp_min=(org.main.temp_min-273.15).toFixed(2);;
+  org.main.temp_max=(org.main.temp_max-273.15).toFixed(2);;
 
     let temperature=temp.replace("{%tempval%}",org.main.temp);
      temperature=temperature.replace("{%tempmin%}",org.main.temp_min);
 
-   temperature=temperature.replace("{%tempmax%}",org.main.humidity);
+   temperature=temperature.replace("{%tempmax%}",org.main.temp_max);
 
      temperature=temperature.replace("{%location%}",org.name);
      temperature=temperature.replace("{%country%}",org.sys.country);
@@ -24,7 +24,7 @@ const replaceval=(temp,org)=>{
 
 const server = http.createServer((req,res)=>{
     if(req.url=="/"){
-        requests('https://api.openweathermap.org/data/2.5/weather?q=balrampur&appid=dc35a840d689f4fe5381661d8c4cec43')
+        requests('https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=dc35a840d689f4fe5381661d8c4cec43')
 .on('data',  (chunk) =>{
     const jsdata=JSON.parse(chunk);
     const arr=[jsdata];
